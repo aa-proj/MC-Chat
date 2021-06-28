@@ -12,21 +12,31 @@ public final class Mcchat extends JavaPlugin {
     public static JDA jda;
 
     private String token;
+    private String ChannelID;
+
+    private static DiscordListener listener;
 
     @Override
     public void onEnable() {
-
-
+        var logger = this.getServer().getLogger();
+        this.getServer().getPluginManager().registerEvents(new MinecraftListener(),this);
         saveDefaultConfig();
         FileConfiguration config = getConfig();
 
-        token = config.getString("Token","");
-
-        // Plugin startup logic
-        try {
-            jda = JDABuilder.createDefault(token).build();
+        token = config.getString("Token", "");
+        ChannelID = config.getString("ChannelID", "");
+        listener = new DiscordListener();
+        listener.setChannelID(ChannelID);
+        if (token == "") {
+            logger.warning("Token not provided");
+            this.getServer().getPluginManager().disablePlugin(this);
+            return;
+        } else try {
+            jda = JDABuilder.createDefault(token).addEventListeners(listener).build();
         } catch (LoginException e) {
-            this.getServer().getLogger().warning(e.getMessage());
+            logger.warning(e.getMessage());
+            this.getServer().getPluginManager().disablePlugin(this);
+            return;
         }
 
     }
