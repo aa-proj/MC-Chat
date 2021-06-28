@@ -1,0 +1,4 @@
+name: MCChat
+version: ${project.version}
+main: com.icloud.kayukawakaoru.Mcchat
+api-version: 1.17
