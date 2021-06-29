@@ -12,32 +12,43 @@ public final class Mcchat extends JavaPlugin {
     public static JDA jda;
 
     private String token;
-    private String ChannelID;
+    private String channelID;
+    private String webHookURL;
 
-    private static DiscordListener listener;
+    private static DiscordListener dListener;
+
+    private static MinecraftListener mListener;
 
     @Override
     public void onEnable() {
         var logger = this.getServer().getLogger();
-        this.getServer().getPluginManager().registerEvents(new MinecraftListener(),this);
         saveDefaultConfig();
         FileConfiguration config = getConfig();
 
         token = config.getString("Token", "");
-        ChannelID = config.getString("ChannelID", "");
-        listener = new DiscordListener();
-        listener.setChannelID(ChannelID);
+        channelID = config.getString("ChannelID", "");
+        webHookURL = config.getString("WebHookUrl","");
+
+        dListener = new DiscordListener();
+        dListener.setChannelID(channelID);
+
         if (token == "") {
             logger.warning("Token not provided");
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         } else try {
-            jda = JDABuilder.createDefault(token).addEventListeners(listener).build();
+            jda = JDABuilder.createDefault(token).addEventListeners(dListener).build();
         } catch (LoginException e) {
             logger.warning(e.getMessage());
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
+
+        mListener = new MinecraftListener();
+        mListener.setJDA(jda);
+        mListener.setChannelID(channelID);
+        mListener.setWebHookUrl(webHookURL);
+        this.getServer().getPluginManager().registerEvents(mListener,this);
 
     }
 

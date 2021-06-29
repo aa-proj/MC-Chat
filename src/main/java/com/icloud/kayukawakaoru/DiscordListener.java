@@ -14,7 +14,9 @@ public class DiscordListener extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (!event.getChannel().getId().equals(channelID)) return;
-        Bukkit.getServer().getLogger().info(event.getMessage().getContentRaw());
+        if(event.getAuthor().isBot()) return;
+        if(!event.getChannel().getId().equals(channelID)) return;
+        //Bukkit.getServer().getLogger().info(event.getMessage().getContentRaw());
+        Bukkit.getServer().broadcastMessage("[§9Discord§r]<"+event.getAuthor().getName()+">"+event.getMessage().getContentRaw());
     }
 }
