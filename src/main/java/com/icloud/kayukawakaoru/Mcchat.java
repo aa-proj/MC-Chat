@@ -32,7 +32,7 @@ public final class Mcchat extends JavaPlugin {
         dListener = new DiscordListener();
         dListener.setChannelID(channelID);
 
-        if (token == "") {
+        if (token.equals("")) {
             logger.warning("Token not provided");
             this.getServer().getPluginManager().disablePlugin(this);
             return;
@@ -45,8 +45,6 @@ public final class Mcchat extends JavaPlugin {
         }
 
         mListener = new MinecraftListener();
-        mListener.setJDA(jda);
-        mListener.setChannelID(channelID);
         mListener.setWebHookUrl(webHookURL);
         this.getServer().getPluginManager().registerEvents(mListener,this);
 
