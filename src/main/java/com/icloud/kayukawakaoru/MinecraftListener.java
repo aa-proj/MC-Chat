@@ -106,7 +106,6 @@ public class MinecraftListener implements Listener {
             new AbstractMap.SimpleEntry<String, String>("adventure/spyglass_at_ghast", "あれは風船？"),
             new AbstractMap.SimpleEntry<String, String>("adventure/spyglass_at_dragon", "あれは飛行機？"),
             new AbstractMap.SimpleEntry<String, String>("adventure/spyglass_at_parrot", "あれは鳥？"),
-            new AbstractMap.SimpleEntry<String, String>("adventure/fall_from_world_height", "洞窟と崖"),
             new AbstractMap.SimpleEntry<String, String>("adventure/trade_at_world_height", "星の商人"),
             new AbstractMap.SimpleEntry<String, String>("adventure/play_jukebox_in_meadows", "サウンド・オブ・ミュージック"),
             new AbstractMap.SimpleEntry<String, String>("adventure/lightning_rod_with_villager_no_fire", "危機一髪"),
@@ -135,7 +134,6 @@ public class MinecraftListener implements Listener {
             new AbstractMap.SimpleEntry<String, String>("husbandry/leash_all_frog_variants", "みんなで町に跳び込もう"),
             new AbstractMap.SimpleEntry<String, String>("husbandry/froglights", "僕たちの力を合わせて！"),
             new AbstractMap.SimpleEntry<String, String>("nether/ride_strider_in_overworld_lava", "実家のような安心感")
-
     );
 
     @EventHandler
@@ -180,6 +178,10 @@ public class MinecraftListener implements Listener {
     }
 
     public void send(String url, String name, String context, String uuid) {
+        if(name == null || context == null || uuid == null) {
+            Bukkit.getLogger().warning("HOGEHOGE");
+            return;
+        }
         WebhookClientBuilder builder = new WebhookClientBuilder(url);
         builder.setThreadFactory(
                 (job) -> {

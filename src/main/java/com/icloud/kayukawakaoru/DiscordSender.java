@@ -27,7 +27,7 @@ public class DiscordSender {
     public void send(){
         List<TextChannel> c = jda.getTextChannelsByName(channelName,true);
         if(c.size()==0){
-            Bukkit.getLogger().warning("sakdfhwuigfhif");
+            //Bukkit.getLogger().warning("sakdfhwuigfhif");
             return;
         }
         for (TextChannel ch:c) {
