@@ -1,2 +1,5 @@
 Token: ""
-ChannelID: ""
+Chat_ChannelID: ""
+WebHookUrl: ""
+Kanrichan_ChannelID: ""
+Kanrichan_UserID: ""

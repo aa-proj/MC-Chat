@@ -2,3 +2,6 @@ name: MCChat
 version: ${project.version}
 main: com.icloud.kayukawakaoru.Mcchat
 api-version: 1.17
+commands:
+  tpa:
+    description: "New Teleport Command"
